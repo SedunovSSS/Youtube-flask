@@ -44,15 +44,15 @@
       </nav>
     </div>
     <div >
-     <video width="80%" height="80%" controls="controls" src="{{ post.path }}" poster="{{ post.preview_path }}">
-   <source src="{{ post.path }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+     <video width="80%" height="80%" controls="controls" src="{{ video.path }}" poster="{{ video.preview_path }}">
+   <source src="{{ video.path }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
   </video>
-    <h2 class="text-light">{{ post.title }}</h2>
-    <h4 class="text-light">Watches: {{ post.watches }}</h4>
-    <h4 class="text-light">Author: {{ post.author }}</h4>
-        <p class="text-light">Description: {{ post.description }}</p>
-        <h4 class="text-light">Date: {{ post.dateR }}</h4><br>
-        <a href="{{ post.path }}" download="{{ post.path }}" class="btn btn-success">Download Video</a><br><br>
+    <h2 class="text-light">{{ video.title }}</h2>
+    <h4 class="text-light">Watches: {{ video.watches }}</h4>
+    <h4 class="text-light">Author: {{ video.author }}</h4>
+        <p class="text-light">Description: {{ video.description }}</p>
+        <h4 class="text-light">Date: {{ video.dateR }}</h4><br>
+        <a href="{{ video.path }}" download="{{ video.path }}" class="btn btn-success">Download Video</a><br><br>
         <div class="alert alert-secondary">
         <form method="post">
         <textarea class="form-control" name="comment" placeholder="Comment"></textarea><br>

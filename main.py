@@ -6,26 +6,26 @@ def main():
     name = request.cookies.get('user')
     search = request.args.get("search")
     if search is None:
-        post = Posts.query.all()
+        videos = Videos.query.all()
     else:
-        post = Posts.query.filter_by(title=search).all()
-    if len(post) > 2:
-        post = list(reversed(post))
-    elif len(post) == 2:
-        post[0], post[1] = post[1], post[0]
+        videos = Videos.query.filter_by(title=search).all()
+    if len(videos) > 2:
+        videos = list(reversed(videos))
+    elif len(videos) == 2:
+        videos[0], videos[1] = videos[1], videos[0]
     else:
-        post = list(post)
+        videos = list(videos)
     if name is None:
         name = "Guest"
     try:
         path = db.session.query(Users.path).filter_by(login=name).first()[0]
-        if post is not None:
-            return render_template("index.html", name=name, path=path, post=post)
+        if videos is not None:
+            return render_template("index.html", name=name, path=path, videos=videos)
         else:
             return render_template("index.html", name=name, path=path)
     except:
-        if post is not None:
-            return render_template("index.html", name=name, post=post)
+        if videos is not None:
+            return render_template("index.html", name=name, videos=videos)
         else:
             return render_template("index.html", name=name)
 
@@ -236,12 +236,12 @@ def addvideo():
                 image.filename = "exists123" + image.filename
                 path = f"static/uploads/{author}/{title}/{image.filename}"
             image.save(preview_path)
-            post = Posts(title=title, description=description, path=path, author=author, preview_path=preview_path)
+            video = Videos(title=title, description=description, path=path, author=author, preview_path=preview_path)
         else:
             return redirect("/addvideo")
         try:
             if author is not None and title is not None:
-                db.session.add(post)
+                db.session.add(video)
                 db.session.commit()
                 return redirect("/")
             else:
@@ -284,7 +284,7 @@ def watch():
         id = request.args.get("id")
         name = request.cookies.get("user")
         path = db.session.query(Users.path).filter_by(login=name).first()[0]
-        video = Posts.query.filter_by(id=id).first()
+        video = Videos.query.filter_by(id=id).first()
         video.watches += 1
         db.session.commit()
         if id is not None and path is not None:
@@ -293,8 +293,8 @@ def watch():
                 comments = list(reversed(comments))
             else:
                 comments = list(comments)
-            post = Posts.query.filter_by(id=id).first()
-            return render_template("watch.html", post=post, name=name, path=path, comments=comments)
+            video = Videos.query.filter_by(id=id).first()
+            return render_template("watch.html", video=video, name=name, path=path, comments=comments)
         else:
             return redirect("/")
 
@@ -302,19 +302,19 @@ def watch():
 @app.route("/myvideos", methods=['GET'])
 def my_videos():
     name = request.cookies.get('user')
-    post = Posts.query.filter_by(author=name).all()
-    length = len(post)
+    video = Videos.query.filter_by(author=name).all()
+    length = len(video)
     if name is None:
         name = "Guest"
     try:
         path = db.session.query(Users.path).filter_by(login=name).first()[0]
-        if post is not None:
-            return render_template("myvideos.html", name=name, path=path, post=post, length=length)
+        if video is not None:
+            return render_template("myvideos.html", name=name, path=path, video=video, length=length)
         else:
             return render_template("myvideos.html", name=name, path=path)
     except:
-        if post is not None:
-            return render_template("myvideos.html", name=name, post=post, length=length)
+        if video is not None:
+            return render_template("myvideos.html", name=name, video=video, length=length)
         else:
             return render_template("myvideos.html", name=name)
 
@@ -323,13 +323,14 @@ def my_videos():
 def delete_video():
     name = request.cookies.get('user')
     id = request.args.get("id")
-    video = Posts.query.filter_by(id=id, author=name).first()
+    video = Videos.query.filter_by(id=id, author=name).first()
     os.remove(video.path)
     os.remove(video.preview_path)
-    Posts.query.filter_by(id=id, author=name).delete()
+    os.rmdir(f"/static/uploads/{video.author}/{video.title}")
+    Videos.query.filter_by(id=id, author=name).delete()
     db.session.commit()
     return redirect("/myvideos")
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=HOST, port=PORT)

@@ -2,13 +2,21 @@ from flask import Flask, render_template, request, redirect, make_response
 from flask_sqlalchemy import SQLAlchemy
 import os
 import hashlib, datetime
+# import socket
 
-admins = ['admin']
+admins = ['admin'] # write Admins logins in list
+HOST = '127.0.0.1'
+PORT = 5000
+# Run on local ip
+# s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+# s.connect(("8.8.8.8", 80))
+# HOST = (s.getsockname()[0])
+# s.close()
 
+DB_NAME = "sqlite:///database.db"
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_NAME
 UPLOAD_FOLDER = './static/uploads'
-
 db = SQLAlchemy(app)
 
 
@@ -24,7 +32,7 @@ class Users(db.Model):
         return '<Users %r>' % self.id
 
 
-class Posts(db.Model):
+class Videos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     watches = db.Column(db.Integer, default=0)
     author = db.Column(db.String(150), nullable=False)
@@ -47,4 +55,3 @@ class Comments(db.Model):
 
     def __repr__(self):
         return '<Comments %r>' % self.id
-

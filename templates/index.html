@@ -53,10 +53,11 @@
     <button type="submit" class="btn btn-danger"><h4>Search</h4></button><br><br>
         </div>
         </form>
-    <br><br><br>
-    <h1 class="text-light">All Videos: </h1><br><br>
+    <br><br>
+    {% if videos %}
+    <h1 class="text-light">All Videos: </h1><br>
     <div class="row row-cols-1 row-cols-md-3 g-20">
-    {% for i in post %}
+    {% for i in videos %}
     <div >
        <a href="/watch?id={{ i.id }}"><img src="{{ i.preview_path }}" class="preview-image"></a>
     <h2 class="text-light">{{ i.title }}</h2>
@@ -66,6 +67,7 @@
     <br>
     <br>
     <br>
+        {% endif %}
 </div>
 </div>
 </body>

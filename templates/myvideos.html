@@ -43,16 +43,16 @@
       </nav>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-20">
-    {% if post %}
+    {% if video %}
   {% for i in range(length) %}
     <div>
       <h4 class="text-light">{{ i+1 }}.</h4>
-      <a href="/watch?id={{ post[i].id }}"><h4>Link To Video "{{ post[i].title }}"</h4></a>
-<img class="blog-image" src="{{ post[i].preview_path }}">
-    <h2 class="text-light">{{ post[i].title }}</h2>
-    <h4 class="text-light">Author: {{ post[i].author }}</h4>
-        <h4 class="text-light">Date: {{ post[i].dateR }}</h4><br>
-     <a class="btn btn-danger" href="/deletevideo?id={{ post[i].id }}">Delete Video</a>
+      <a href="/watch?id={{ video[i].id }}"><h4>Link To Video "{{ video[i].title }}"</h4></a>
+<img class="blog-image" src="{{ video[i].preview_path }}">
+    <h2 class="text-light">{{ video[i].title }}</h2>
+    <h4 class="text-light">Author: {{ video[i].author }}</h4>
+        <h4 class="text-light">Date: {{ video[i].dateR }}</h4><br>
+     <a class="btn btn-danger" href="/deletevideo?id={{ video[i].id }}">Delete Video</a>
     </div>
   {% endfor %}
     {% endif %}
