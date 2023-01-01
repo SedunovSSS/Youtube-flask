@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="icon" href="/static/logo.png">
+    <title>Document</title>
+    <style>
+        img{
+          width: 48px;
+          height: 48px;
+        }
+        .profile{
+            width: 24px;
+          height: 24px;
+        }
+        body{
+        background-color: black;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="container py-3">
+<div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+<span class="fs-4 text-light"><img src="/static/logo.png"> | GovnoTube</span>
+<nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+      <a class="me-3 py-2 text-light text-decoration-none" href="/">Home</a>
+      <a class="me-3 py-2 text-light text-decoration-none" href="/register">Register</a>
+       {% if name == "Guest" %}
+      <a class="me-3 py-2 text-light text-decoration-none" href="/login">Login</a>
+          {% else %}
+          <a class="me-3 py-2 text-light text-decoration-none" href="/login">Login</a>
+         <a class="me-3 py-2 text-ligth text-decoration-none" href="/profile"><img  class="profile" src="{{ path }}">{% endif %} {{ name }}</a>
+      </nav>
+    </div>
+    <h1 class="text-secondary">Hello, Administrator {% if path %}<a href="/profile?user={{ name }}"><img src="{{ path }}"></a>{% endif %}{{ name }}</h1>
+    <h1 class="text-secondary">Welcome to administration panel</h1><br>
+    <h1 class="text-primary">All Users</h1><br>
+    <br>
+    <div class="alert alert-success">
+    <a href="/register" class="btn btn-primary"><h2>Add User</h2></a><br><br><br>
+        </div>
+    <div class="alert alert-success">
+    {% for i in range(length) %}
+        <h4>{{i + 1}}. <img src="{{users[i].path}}" class="profile">  {{users[i].login}} | {{users[i].email}} | {{ users[i].dateR }}</h4><a href="/admin/changeuser?user={{ users[i].login }}" class="btn btn-success"><h4>Change User</h4></a> <a href="/admin/deluser?user={{ users[i].login }}" class="btn btn-danger"><h4>Delete User</h4></a>
+    {% endfor %}
+        </div>
+    <br>
+
+</div>
+</body>
+</html>
