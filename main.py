@@ -11,6 +11,8 @@ def main():
         post = Posts.query.filter_by(title=search).all()
     if len(post) > 2:
         post = list(reversed(post))
+    elif len(post) == 2:
+        post[0], post[1] = post[1], post[0]
     else:
         post = list(post)
     if name is None:
