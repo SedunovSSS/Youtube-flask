@@ -217,49 +217,24 @@ def addvideo():
     if request.method == "POST":
         author = request.cookies.get("user")
         title = request.form['title']
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
         description = request.form['description']
->>>>>>> c2b0d05 (shit)
->>>>>>> ec40277 (shit)
->>>>>>> 28d0da3 (shit)
->>>>>>> 44c78db (govno)
         image = request.files['image[]']
         video = request.files['video[]']
-        path = f"static/uploads/{author}/{video.filename}"
-        preview_path = f"static/uploads/{author}/{image.filename}"
+        video.filename = str(video.filename).replace(" ", "_").replace(":", "_")
+        image.filename = str(image.filename).replace(" ", "_").replace(":", "_")
+        path = f"static/uploads/{author}/{title}/{video.filename}"
+        preview_path = f"static/uploads/{author}/{title}/{image.filename}"
+        os.makedirs(f"static/uploads/{author}/{title}")
         if video and image:
             while os.path.exists(path):
                 video.filename = "exists123" + video.filename
-                path = f"static/uploads/{author}/{video.filename}"
+                path = f"static/uploads/{author}/{title}/{video.filename}"
             video.save(path)
             while os.path.exists(preview_path):
                 image.filename = "exists123" + image.filename
-                path = f"static/uploads/{author}/{image.filename}"
+                path = f"static/uploads/{author}/{title}/{image.filename}"
             image.save(preview_path)
-<<<<<<< HEAD
-            post = Posts(title=title, path=path, author=author, preview_path=preview_path)
-=======
-<<<<<<< HEAD
-            post = Posts(title=title, path=path, author=author, preview_path=preview_path)
-=======
-<<<<<<< HEAD
-            post = Posts(title=title, path=path, author=author, preview_path=preview_path)
-=======
-<<<<<<< HEAD
-            post = Posts(title=title, path=path, author=author, preview_path=preview_path)
-=======
             post = Posts(title=title, description=description, path=path, author=author, preview_path=preview_path)
->>>>>>> c2b0d05 (shit)
->>>>>>> ec40277 (shit)
->>>>>>> 28d0da3 (shit)
->>>>>>> 44c78db (govno)
         else:
             return redirect("/addvideo")
         try:

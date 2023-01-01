@@ -29,19 +29,7 @@ class Posts(db.Model):
     watches = db.Column(db.Integer, default=0)
     author = db.Column(db.String(150), nullable=False)
     title = db.Column(db.String(150), nullable=False)
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
     description = db.Column(db.String(500), nullable=False)
->>>>>>> c2b0d05 (shit)
->>>>>>> ec40277 (shit)
->>>>>>> 28d0da3 (shit)
->>>>>>> 44c78db (govno)
     path = db.Column(db.String(150), nullable=False)
     preview_path = db.Column(db.String(150), nullable=False)
     dateR = db.Column(db.DateTime, default=datetime.datetime.utcnow())
