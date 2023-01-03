@@ -19,6 +19,10 @@
         body{
         background-color: black;
         }
+        .preview{
+            width: 600px;
+            height: 300px;
+        }
     </style>
 
 
@@ -34,20 +38,20 @@
       <a class="me-3 py-2 text-light text-decoration-none" href="/login">Login</a>
           {% else %}
           <a class="me-3 py-2 text-light text-decoration-none" href="/login">Login</a>
-         <a class="me-3 py-2 text-ligth text-decoration-none" href="/profile"><img  class="profile" src="{{ path }}">{% endif %} {{ name }}</a>
+         <a class="me-3 py-2 text-ligth text-decoration-none" href="/profile"><img  class="profile" src="/{{ path }}">{% endif %} {{ name }}</a>
       </nav>
     </div>
-    <h1 class="text-secondary">Hello, Administrator {% if path %}<a href="/profile?user={{ name }}"><img src="{{ path }}"></a>{% endif %}{{ name }}</h1>
+    <h1 class="text-secondary">Hello, Administrator {% if path %}<a href="/profile"><img src="/{{ path }}"></a>{% endif %}{{ name }}</h1>
     <h1 class="text-secondary">Welcome to administration panel</h1><br>
-    <a href="/admin/videos"><h1 >Admin Videos</h1></a>
-    <h1 class="text-primary">All Users</h1><br>
+    <h1 class="text-primary">All Videos</h1><br>
     <br>
-    <div class="alert alert-success">
-    <a href="/register" class="btn btn-primary"><h2>Add User</h2></a><br><br><br>
-        </div>
-    <div class="alert alert-success">
+
+    <div >
     {% for i in range(length) %}
-        <h4>{{i + 1}}. <img src="{{users[i].path}}" class="profile">  {{users[i].login}} | {{users[i].email}} | {{ users[i].dateR }}</h4><a href="/admin/changeuser?user={{ users[i].login }}" class="btn btn-success"><h4>Change User</h4></a> <a href="/admin/deluser?user={{ users[i].login }}" class="btn btn-danger"><h4>Delete User</h4></a>
+        <h4 class="text-light">{{i + 1}}.
+         <a href="/watch?id={{ videos[i].id }}"><h4>Link to watch video</h4></a>
+        </h4> <img src="/{{videos[i].preview_path}}" class="preview"> <h4 class="text-light"> {{videos[i].author}} | {{videos[i].title}} | {{ videos[i].dateR }}</h4> <a href="/deletevideoadmin?id={{ videos[i].id }}" class="btn btn-danger"><h4>Delete Video</h4></a>
+
     {% endfor %}
         </div>
     <br>

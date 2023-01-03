@@ -224,19 +224,20 @@ def addvideo():
         video = request.files['video[]']
         video.filename = str(video.filename).replace(" ", "_").replace(":", "_")
         image.filename = str(image.filename).replace(" ", "_").replace(":", "_")
-        path = f"static/uploads/{author}/{title}/{video.filename}"
-        preview_path = f"static/uploads/{author}/{title}/{image.filename}"
-        os.makedirs(f"static/uploads/{author}/{title}")
+        t = title
+        p = f"static/uploads/{author}/{t}"
+        path = f"static/uploads/{author}/{t}/{video.filename}"
+        preview_path = f"static/uploads/{author}/{t}/{image.filename}"
+        while os.path.exists(p):
+            t = "exists123" + t
+            p = f"static/uploads/{author}/{t}"
+            path = f"static/uploads/{author}/{t}/{video.filename}"
+            preview_path = f"static/uploads/{author}/{t}/{image.filename}"
+        os.makedirs(p)
         if video and image:
-            while os.path.exists(path):
-                video.filename = "exists123" + video.filename
-                path = f"static/uploads/{author}/{title}/{video.filename}"
             video.save(path)
-            while os.path.exists(preview_path):
-                image.filename = "exists123" + image.filename
-                path = f"static/uploads/{author}/{title}/{image.filename}"
             image.save(preview_path)
-            video = Videos(title=title, description=description, path=path, author=author, preview_path=preview_path)
+            video = Videos(title=title, t=t, description=description, path=path, author=author, preview_path=preview_path)
         else:
             return redirect("/addvideo")
         try:
@@ -291,6 +292,8 @@ def watch():
             comments = Comments.query.filter_by(post_id=id).all()
             if len(comments) > 2:
                 comments = list(reversed(comments))
+            elif len(comments) == 2:
+                comments[0], comments[1] = comments[1], comments[0]
             else:
                 comments = list(comments)
             video = Videos.query.filter_by(id=id).first()
@@ -326,10 +329,38 @@ def delete_video():
     video = Videos.query.filter_by(id=id, author=name).first()
     os.remove(video.path)
     os.remove(video.preview_path)
-    os.rmdir(f"/static/uploads/{video.author}/{video.title}")
+    os.rmdir(f"/static/uploads/{video.author}/{video.t}")
     Videos.query.filter_by(id=id, author=name).delete()
     db.session.commit()
     return redirect("/myvideos")
+
+
+@app.route("/admin/videos")
+def admin_videos():
+    name = request.cookies.get("user")
+    if name in admins:
+        videos = Videos.query.all()
+        path = db.session.query(Users.path).filter_by(login=name).first()[0]
+        return render_template("adminvideos.html", videos=videos, length=len(videos), name=name, path=path)
+
+    else:
+        return redirect("/")
+
+
+@app.route("/deletevideoadmin")
+def delete_video_admin():
+    name = request.cookies.get('user')
+    if name in admins:
+        id = request.args.get("id")
+        video = Videos.query.filter_by(id=id).first()
+        os.remove(video.path)
+        os.remove(video.preview_path)
+        os.rmdir(f"static/uploads/{video.author}/{video.t}")
+        Videos.query.filter_by(id=id).delete()
+        db.session.commit()
+        return redirect("/admin/videos")
+    else:
+        return redirect("/")
 
 
 if __name__ == '__main__':

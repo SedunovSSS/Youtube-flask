@@ -37,6 +37,7 @@ class Videos(db.Model):
     watches = db.Column(db.Integer, default=0)
     author = db.Column(db.String(150), nullable=False)
     title = db.Column(db.String(150), nullable=False)
+    t = db.Column(db.String(150), nullable=False)
     description = db.Column(db.String(500), nullable=False)
     path = db.Column(db.String(150), nullable=False)
     preview_path = db.Column(db.String(150), nullable=False)
