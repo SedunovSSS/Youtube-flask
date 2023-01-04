@@ -223,11 +223,11 @@ def addvideo():
         image = request.files['image[]']
         video = request.files['video[]']
         video.filename = str(video.filename).replace(" ", "_").replace(":", "_")
-        image.filename = str(image.filename).replace(" ", "_").replace(":", "_")
         t = title
         p = f"static/uploads/{author}/{t}"
         path = f"static/uploads/{author}/{t}/{video.filename}"
         preview_path = f"static/uploads/{author}/{t}/{image.filename}"
+        image.filename = str(image.filename).replace(" ", "_").replace(":", "_")
         while os.path.exists(p):
             t = "exists123" + t
             p = f"static/uploads/{author}/{t}"
@@ -287,6 +287,7 @@ def watch():
         path = db.session.query(Users.path).filter_by(login=name).first()[0]
         video = Videos.query.filter_by(id=id).first()
         video.watches += 1
+        videos = Videos.query.filter_by(title=video.title).all()
         db.session.commit()
         if id is not None and path is not None:
             comments = Comments.query.filter_by(post_id=id).all()
@@ -297,7 +298,7 @@ def watch():
             else:
                 comments = list(comments)
             video = Videos.query.filter_by(id=id).first()
-            return render_template("watch.html", video=video, name=name, path=path, comments=comments)
+            return render_template("watch.html", video=video, videos=videos, name=name, path=path, comments=comments)
         else:
             return redirect("/")
 

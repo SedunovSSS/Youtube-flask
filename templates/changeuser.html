@@ -34,21 +34,21 @@
       <a class="me-3 py-2 text-light text-decoration-none" href="/login">Login</a>
           {% else %}
           <a class="me-3 py-2 text-light text-decoration-none" href="/login">Login</a>
-         <a class="me-3 py-2 text-ligth text-decoration-none" href="/profile"><img  class="profile" src="{{ path }}">{% endif %} {{ name }}</a>
+         <a class="me-3 py-2 text-ligth text-decoration-none" href="/profile"><img  class="profile" src="/{{ path }}">{% endif %} {{ name }}</a>
       </nav>
     </div>
         <h1 class="text-success"><img src="/{{user.path}}"> {{user.login}}</h1>
 
-    <h1>Change User</h1>
+    <h1 class="text-light">Change User</h1>
         <br>
         <br>
         <br>
         <form action="" method="post" enctype="multipart/form-data">
             <input type="email" class="form-control" placeholder="New Email" name="email" value="{{ user.email }}"><br>
-            <p>New Icon: </p><input type="file" name="icon[]" id="icon" value="Your icon" class="btn btn-success"><br><br>
+            <p class="text-light">New Icon: </p><input type="file" name="icon[]" id="icon" value="Your icon" class="btn btn-success"><br><br>
         <input type="password" class="form-control" placeholder="New Password" name="passw1" id="passw1"><br>
         <input type="password" class="form-control" placeholder="Confirm Password" name="passw2" id="passw2"><br>
-        <label><input type="checkbox" class="apavolku-galocksed"> Show Password</label><br><br>
+            <label><input type="checkbox" class="apavolku-galocksed"> <p class="text-light">Show Password</p></label><br><br>
         <button class="btn btn-success" type="submit">Change</button>
         </form>
 </div>

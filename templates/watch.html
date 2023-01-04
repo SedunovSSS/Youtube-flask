@@ -21,10 +21,17 @@
         height: 400px;
         }
         .comments{
-        height: 500px;
+        width: 50%;
         }
         body{
         background-color: black;
+        }
+        .recommends{
+        margin-left: 70%;
+        }
+        .r-img{
+        width: 300px;
+        height: 150px;
         }
     </style>
 
@@ -47,23 +54,32 @@
      <video width="80%" height="80%" controls="controls" src="{{ video.path }}" poster="{{ video.preview_path }}">
    <source src="{{ video.path }}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
   </video>
+
+            <div>
     <h2 class="text-light">{{ video.title }}</h2>
     <h4 class="text-light">Watches: {{ video.watches }}</h4>
     <h4 class="text-light">Author: {{ video.author }}</h4>
         <p class="text-light">Description: {{ video.description }}</p>
         <h4 class="text-light">Date: {{ video.dateR }}</h4><br>
         <a href="{{ video.path }}" download="{{ video.path }}" class="btn btn-success">Download Video</a><br><br>
-        <div class="alert alert-secondary">
+
+    <br>
+    <br>
+    <br>
+</div>
+    <div class="row row-cols-1 row-cols-md-2">
+       <div class="alert alert-secondary comments" >
         <form method="post">
         <textarea class="form-control" name="comment" placeholder="Comment"></textarea><br>
 
         <button class="btn btn-success"><h4 class="text-light">Send</h4></button><br><br>
         </form>
-            </div>
         </div><br>
+        <h1 class="text-primary">Recommendations</h1><br>
        {% if comments %}
-        <h1 class="text-primary">All Comments</h1><br>
-        <div class="alert alert-secondary">
+
+        <div class="comments">
+
         {% for i in comments %}
             <div  class="alert alert-success">
             <h4 >{{ i.author }}: {{ i.text }} </h4>
@@ -72,9 +88,18 @@
          {% endfor %}
         </div>
     {% endif %}
-    <br>
-    <br>
-    <br>
+
+
+    <div>
+        {% for i in videos %}
+        <a href="/watch?id={{ i.id }}"> <img class="r-img" src="{{ i.preview_path }}"></a>
+        <p class="text-light">{{ i.title }}</p>
+        <p class="text-light">Author: {{ i.author }}</p>
+        <p class="text-light">Description: {{ i.description }}</p>
+        {% endfor %}
+    </div><br>
+</div>
+    </div>
 </div>
 </body>
 </html>
