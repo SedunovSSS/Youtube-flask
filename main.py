@@ -7,6 +7,8 @@ def main():
     search = request.args.get("search")
     if search is None:
         videos = Videos.query.all()
+    elif search == "":
+        videos = Videos.query.all()
     else:
         videos = Videos.query.filter_by(title=search).all()
     if len(videos) > 2:
@@ -129,7 +131,11 @@ def profile():
                 try:
                     path = f"static/uploads/{login}/icon.png"
                     user.email = email
-                    user.password = password
+                    if not passw1 == "" or not passw2 == "":
+                        print(passw1, passw2)
+                        user.password = password
+                    else:
+                        return redirect("/profile")
                     user.path = path
                     db.session.commit()
                     return redirect("/")
