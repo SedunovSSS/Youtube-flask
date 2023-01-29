@@ -7,41 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link rel="icon" href="/static/logo.png">
+    <link rel="stylesheet" href="/static/css/style.css">
     <title>Govno | Tube</title>
-    <style>
-        img{
-          width: 48px;
-          height: 48px;
-        }
-        .profile{
-            width: 24px;
-          height: 24px;
-        }
-        .blog-image{
-        width: 800px;
-        height: 400px;
-        }
-        .comments{
-        width: 50%;
-        }
-        body{
-        background-color: black;
-        }
-        .recommends{
-        margin-left: 70%;
-        }
-        .r-img{
-        width: 300px;
-        height: 150px;
-        }
-    </style>
+
 
 </head>
 <body>
 <div class="container py-3">
 <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-    <span class="animation"></span>
-    <span class="text-light"> | Govno Tube</span>
+        <span class="animation"></span>
+    <span class="text-light" style="margin-right: 50px;"> | Govno Tube</span>
+ <form method="get" action="/">
+    <input type="text" class="form-control" placeholder="Search Video" name="search" style="display:inline-block; width: 250px">
+    <button type="submit" class="btn btn-danger" style="display:inline-block">Search</button><br><br>
+    </form>
 
 <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
     <a class="me-3 py-2 btn btn-primary" href="/addvideo">Add Video</a>
@@ -62,6 +41,11 @@
 
             <div>
     <h2 class="text-light">{{ video.title }}</h2>
+<!--                <img class="like" src="/static/like.png"  style="display:inline-block">-->
+<!--                <img class="like" src="/static/dislike.png"  style="display:inline-block"> <br>-->
+<!--                <p class="text-light like"  style="display:inline-block">50</p>-->
+<!--                <p class="text-light like"  style="display:inline-block">50</p>-->
+
     <h4 class="text-light">Watches: {{ video.watches }}</h4>
     <h4 class="text-light">Author: {{ video.author }}</h4>
         <p class="text-light">Description: {{ video.description }}</p>
